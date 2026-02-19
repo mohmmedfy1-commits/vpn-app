@@ -1,5 +1,4 @@
-
-name: Build APK
+name: إنشاء ملف APK
 
 on:
   workflow_dispatch:
@@ -12,7 +11,7 @@ jobs:
       - name: تحميل المشروع
         uses: actions/checkout@v4
 
-      - name: تثبيت Python
+      - name: إعداد Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -27,17 +26,14 @@ jobs:
         with:
           flutter-version: '3.22.2'
 
-      - name: تفعيل Android build
-        run: |
-          flutter config --no-analytics
-          flutter doctor
+      - name: إعداد Flutter
+        run: flutter doctor
 
       - name: بناء APK
-        run: |
-          flet build apk --verbose
+        run: flutter build apk --release
 
       - name: رفع ملف APK
         uses: actions/upload-artifact@v4
         with:
-          name: vpn-apk
+          name: VPN-APK
           path: build/app/outputs/flutter-apk/app-release.apk
